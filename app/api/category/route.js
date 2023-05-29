@@ -1,3 +1,4 @@
+//add new category 
 import User from "@/models/user"
 import { connectToDB } from "@/utils/db"
 
@@ -15,12 +16,7 @@ export const POST = async (request, { params }) => {
             return new Response("User not found", { status: 404 });
         }
 
-        // Update the prompt with new data
-        let temp = currentUser.categories
-        temp.push(categoryName)
-        console.log(temp)
-        currentUser.categories = temp 
-
+        currentUser.categories.push(categoryName)
         await currentUser.save();
 
         return new Response("Successfully added new category", { status: 200 });

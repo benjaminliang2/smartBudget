@@ -1,10 +1,10 @@
-import {Schema, model, models} from 'mongoose'
+import { Schema, model, models } from 'mongoose'
 
 const ExpenseSchema = new Schema({
-    id: String, 
-    userId: String, 
-    category:String,
-    expenses:[{
+    userId: String,
+    id: String,
+    category: String,
+    expenses: [{
         name: String,
         date: Date,
         cost: Number,
