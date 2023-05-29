@@ -1,18 +1,16 @@
 import {Schema, model, models} from 'mongoose'
 
 const ExpenseSchema = new Schema({
-    category:{
-        type: String,
-        required:[true, 'Please select existing category or create a new one']
-    },
-    location:{
+    id: String, 
+    userId: String, 
+    category:String,
+    expenses:[{
         name: String,
-        date: String,
-        cost: date,
-        location: String
-    }
+        date: Date,
+        cost: Number,
+        merchant: String
+    }]
 })
 
-const Expense = models.Expense;
-
+const Expense = models.Expense || model("Expense", ExpenseSchema);
 export default Expense;
