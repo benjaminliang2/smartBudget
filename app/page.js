@@ -3,7 +3,9 @@ import { SideBar } from '@/components/Sidebar.jsx'
 const Home = () => {
   return (
     <>
-      <SideBar />
+      <h1>
+        Dashboard
+      </h1>
     </>
   )
 }

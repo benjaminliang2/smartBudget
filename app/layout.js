@@ -1,6 +1,7 @@
 import '@/styles/globals.css'
 import Provider from '@/components/Provider'
 import Navbar  from '@/components/Navbar.jsx'
+import { SideBar } from '@/components/Sidebar';
 
 
 export const metadata = {
@@ -14,6 +15,7 @@ const RootLayout = ({ children }) => (
       <Provider>
         <main className='app'>
           <Navbar />
+          <SideBar/>
           {children}
         </main>
       </Provider>

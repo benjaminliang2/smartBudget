@@ -50,8 +50,8 @@ export const SideBar = () => {
 
 
   return (
-    <div className="fixed top-0 left-0 h-screen w-16 flex flex-col
-                    bg-white dark:bg-gray-900 shadow-lg"
+    <div className="fixed top-10 left-0 h-min w-min flex flex-col
+                    bg-white dark:bg-gray-900 shadow-lg rounded-full m-5 p-2"
 
     >
       <div className="relative inline-block" onClick={() => { setIsInputVisible(true) }}>
@@ -89,10 +89,14 @@ export const SideBar = () => {
 
 const SideBarIcon = ({ icon, text = 'Add New Category' }) => (
   <div className="sidebar-icon group">
-    <Link href={{pathname:`/category/${text}`}}>
-
-      {icon}
-    </Link>
+    {text !== 'Add New Category' ? (
+      <Link href={{ pathname: `/category/${text}` }}>
+        {icon}
+      </Link>)
+      : (
+        icon
+      )
+    }
     <span className="sidebar-tooltip group-hover:scale-100">
       {text}
     </span>
