@@ -30,7 +30,7 @@ export const SideBar = () => {
 
   const addExpenseCategory = async () => {
     try {
-      const response = await fetch("/api/category", {
+      const response = await fetch(`/api/${session?.user.id}/category`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',

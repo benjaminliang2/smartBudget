@@ -1,7 +1,28 @@
+//get all expenses 
 //add new expense
 
 import Expense from "@/models/expense";
 import { connectToDB } from "@/utils/db";
+import { connect } from "mongoose";
+
+
+export const GET = async (request, {params}) => {
+    const {userId, categoryName} = params
+    try {
+        await connectToDB()
+        const data = await Expense.findOne({ userId, category: categoryName })
+        
+        if(data){
+            console.log("success: queried all expenses for category")
+            console.log(data.expenses)
+            return new Response(JSON.stringify(data.expenses), { status: 201 })
+        }
+    } catch (error) {
+        return new Response("Failed to fetch expenses in this category", { status: 500 });
+
+    }
+}
+
 
 export const POST = async (request, { params }) => {
     const categoryName = params.categoryName

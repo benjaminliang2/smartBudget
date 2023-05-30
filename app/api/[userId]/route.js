@@ -1,9 +1,9 @@
-// /api/category will fetch all categories for this user. 
+// /api/[userid]/category will fetch all categories for this user. 
 
 import User from "@/models/user";
 import { connectToDB } from "@/utils/db";
 
-export const GET = async (reques, {params}) => {
+export const GET = async (request, {params}) => {
     try {
         await connectToDB()
 
