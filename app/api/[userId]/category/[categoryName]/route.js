@@ -1,9 +1,8 @@
-//get all expenses 
-//add new expense
+//get all expenses in category
+//add new expense in category
 
 import Expense from "@/models/expense";
 import { connectToDB } from "@/utils/db";
-import { connect } from "mongoose";
 
 
 export const GET = async (request, {params}) => {

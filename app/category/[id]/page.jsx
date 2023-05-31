@@ -37,11 +37,25 @@ const CategoryPage = ({ params }) => {
           merchant
         })
       })
-        .then(response => console.log(response))
+        .then(response => response.json())
+        .then(data => console.log(data))
     } catch (error) {
       console.log(error)
     }
   }
+
+  // useEffect(() => {
+  //   const testNLP = async () => {
+  //     try {
+  //       await fetch('/api/nlp')
+  //         .then(res => console.log(res))
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   testNLP()
+  // }, [])
+
 
   useEffect(() => {
     const getAllExpensesForCategory = async () => {
@@ -82,16 +96,21 @@ const CategoryPage = ({ params }) => {
           </div>
           <button onClick={() => addExpense()}>Save</button>
         </div>
+
+        <TestNLP />
         {expenses?.map((each, index) =>
 
           <ExpenseCard key={each._id} cost={each.cost} name={each.name} merchant={each.merchant} />
         )}
-
       </div>
 
     </>
 
   );
 };
+
+const TestNLP = () => {
+
+}
 
 export default CategoryPage;
