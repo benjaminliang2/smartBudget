@@ -3,8 +3,7 @@ import User from "@/models/user"
 import { connectToDB } from "@/utils/db"
 
 export const POST = async (request, { params }) => {
-    const { categoryName, userId } = await request.json();
-    console.log(categoryName, userId)
+    const { categoryName, userId, categoryIcon } = await request.json();
     console.log("post request")
     try {
         await connectToDB();
@@ -16,7 +15,7 @@ export const POST = async (request, { params }) => {
             return new Response("User not found", { status: 404 });
         }
 
-        currentUser.categories.push(categoryName)
+        currentUser.categories.push({categoryName, categoryIcon})
         await currentUser.save();
 
         return new Response("Successfully added new category", { status: 200 });

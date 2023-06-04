@@ -44,6 +44,7 @@ export const SideBar = () => {
         },
         body: JSON.stringify({
           categoryName: `${newCategory}`,
+          categoryIcon: `${selectedIcon}`,
           userId: session?.user.id
         })
       })
@@ -85,7 +86,7 @@ export const SideBar = () => {
         </div>
 
         {categories?.map((each, index) =>
-          <SideBarIcon iconName="FaApple" text={each} />
+          <SideBarIcon iconName={each.categoryIcon} text={each.categoryName} />
         )}
       </div>
     </>
