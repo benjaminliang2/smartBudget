@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import Link from 'next/link';
 import { IconSelection } from './IconSelection';
+import { FaDollarSign } from 'react-icons/fa';
 
 export const SideBar = () => {
   const { data: session } = useSession()
@@ -49,9 +50,9 @@ export const SideBar = () => {
         })
       })
         .then(response => console.log(response))
-        setCategories(prev => [...prev, {categoryName: newCategory, categoryIcon: selectedIcon}])
-        setNewCategory('')
-        setIsInputVisible(false)
+      setCategories(prev => [...prev, { categoryName: newCategory, categoryIcon: selectedIcon }])
+      setNewCategory('')
+      setIsInputVisible(false)
     } catch (error) {
       console.log(error)
     }
@@ -75,7 +76,7 @@ export const SideBar = () => {
                 type="text"
                 value={newCategory}
                 onChange={(e) => setNewCategory(e.target.value)}
-  
+
               />
               <IconSelection selectedIcon={selectedIcon} setSelectedIcon={setSelectedIcon} />
               <button type="button" onMouseDown={() => setIsInputVisible(false)} className=" px-4 py-2 text-xs font-semibold uppercase cursor-pointer outline-none transition-colors  bg-slate-200">Cancel</button>
@@ -102,20 +103,20 @@ const SideBarIcon = ({ iconName = "FaPlus", text = 'Add New Category' }) => {
   );
   return (
     <div className="sidebar-icon group">
-      <Suspense fallback={<h1>Loading...</h1>}>
 
-        {text !== 'Add New Category' ? (
+      {text == 'Add New Category' && <FaPlus size="28" />}
+
+      <Suspense fallback={<h1>Loading...</h1>}>
+        {text !== 'Add New Category' &&
           <Link href={{ pathname: `/category/${text}` }}>
             {Icon && <Icon size="28" />}
-          </Link>)
-          : (
-            Icon && <Icon size="28" />
-          )
+          </Link>
+
         }
-        <span className="sidebar-tooltip group-hover:scale-100">
-          {text}
-        </span>
       </Suspense>
+      <span className="sidebar-tooltip group-hover:scale-100">
+        {text}
+      </span>
     </div>
   )
 
