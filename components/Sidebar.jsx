@@ -65,23 +65,18 @@ export const SideBar = () => {
           <SideBarIcon icon={<FaPlus size="28" />} />
           {isInputVisible && (<>
 
-            <div className="absolute top-0 left-full transform translate-x-2">
+            <div className="absolute top-0 left-full transform translate-x-2 ">
               <input
                 className="border border-gray-300 p-2"
                 ref={inputRef}
                 type="text"
                 value={newCategory}
                 onChange={(e) => setNewCategory(e.target.value)}
-                onBlur={(e) => {
-                  setTimeout(() => {
-
-                    setIsInputVisible(false)
-                  },100)
-                }}
-
+  
               />
               <IconSelection selectedIcon={selectedIcon} setSelectedIcon={setSelectedIcon} />
-              <button type="button" onMouseDown={() => addExpenseCategory()} className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+              <button type="button" onMouseDown={() => setIsInputVisible(false)} className=" px-4 py-2 text-xs font-semibold uppercase cursor-pointer outline-none transition-colors  bg-slate-200">Cancel</button>
+              <button type="button" onMouseDown={() => addExpenseCategory()} className=" text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
 
             </div>
 

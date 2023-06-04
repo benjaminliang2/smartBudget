@@ -20,10 +20,8 @@ export const IconSelection = ({ selectedIcon, setSelectedIcon }) => {
         <button
           key={icon.name}
           className={`icon-option flex items-center justify-center w-12 h-12 border border-gray-300 rounded cursor-pointer mr-4 ${selectedIcon === icon.name ? 'bg-gray-300' : ''}`}
-          style={{ zIndex: 20 }}
           onClick={(e) => {
-            e.stopPropagation()
-            console.log(icon.name)
+            setSelectedIcon(icon.name)
           }}
         >
           {icon.icon}
