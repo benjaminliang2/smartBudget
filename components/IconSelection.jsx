@@ -13,15 +13,18 @@ const icons = [
   { icon: <FaCar />, name: 'FaCar' },
 ];
 
-export const IconSelection = ({selectedIcon, setSelectedIcon}) => {
+export const IconSelection = ({ selectedIcon, setSelectedIcon }) => {
   return (
     <div className="flex">
       {icons.map((icon) => (
         <button
           key={icon.name}
-          className={`icon-option flex items-center justify-center w-12 h-12 border border-gray-300 rounded cursor-pointer mr-4 ${selectedIcon === icon.name ? 'bg-gray-300' : ''
-            }`}
-            onClick={()=> console.log(icon.name)}
+          className={`icon-option flex items-center justify-center w-12 h-12 border border-gray-300 rounded cursor-pointer mr-4 ${selectedIcon === icon.name ? 'bg-gray-300' : ''}`}
+          style={{ zIndex: 20 }}
+          onClick={(e) => {
+            e.stopPropagation()
+            console.log(icon.name)
+          }}
         >
           {icon.icon}
         </button>
