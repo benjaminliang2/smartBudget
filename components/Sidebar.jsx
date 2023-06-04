@@ -49,7 +49,9 @@ export const SideBar = () => {
         })
       })
         .then(response => console.log(response))
-      setNewCategory('')
+        setCategories(prev => [...prev, {categoryName: newCategory, categoryIcon: selectedIcon}])
+        setNewCategory('')
+        setIsInputVisible(false)
     } catch (error) {
       console.log(error)
     }
