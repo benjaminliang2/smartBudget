@@ -53,7 +53,6 @@ const CategoryPage = ({ params }) => {
   //       console.log(error)
   //     }
   //   }
-  //   testNLP()
   // }, [])
 
 

@@ -1,15 +1,18 @@
 "use client"
 import { FaPlus } from 'react-icons/fa';
 import { useSession } from 'next-auth/react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import Link from 'next/link';
+import { IconSelection } from './IconSelection';
 
 export const SideBar = () => {
   const { data: session } = useSession()
   const [categories, setCategories] = useState()
   const [newCategory, setNewCategory] = useState('')
   const [isInputVisible, setIsInputVisible] = useState(false)
+  const [selectedIcon, setSelectedIcon] = useState()
   const inputRef = useRef(null)
+
   useEffect(() => {
     const fillSidebar = async () => {
       try {
@@ -28,9 +31,13 @@ export const SideBar = () => {
     }
   }, [isInputVisible]);
 
+  useEffect(() => {
+    console.log(selectedIcon)
+  }, [selectedIcon])
+
   const addExpenseCategory = async () => {
     try {
-      const response = await fetch(`/api/${session?.user.id}/category`, {
+      await fetch(`/api/${session?.user.id}/category`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
@@ -45,60 +52,68 @@ export const SideBar = () => {
     } catch (error) {
       console.log(error)
     }
-
   }
 
-
   return (
-    <div className="fixed top-10 left-0 h-min w-min flex flex-col
+    <>
+
+      <div className="fixed top-10 left-0 h-min w-min flex flex-col
                     bg-white dark:bg-gray-900 shadow-lg rounded-full m-5 p-2"
+      >
 
-    >
-      <div className="relative inline-block" onClick={() => { setIsInputVisible(true) }}>
-        <SideBarIcon icon={<FaPlus size="28" />} />
-        {isInputVisible && (<>
+        <div className="relative inline-block" onClick={() => { setIsInputVisible(true) }}>
+          <SideBarIcon icon={<FaPlus size="28" />} />
+          {isInputVisible && (<>
 
-          <div className="absolute top-0 left-full transform translate-x-2">
-            <input
-              className="border border-gray-300 p-2"
-              ref={inputRef}
-              type="text"
-              value={newCategory}
-              onChange={(e) => setNewCategory(e.target.value)}
-              onBlur={() => setIsInputVisible(false)}
-            />
-            <button type="button" onMouseDown={() => addExpenseCategory()} className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+            <div className="absolute top-0 left-full transform translate-x-2">
+              <input
+                className="border border-gray-300 p-2"
+                ref={inputRef}
+                type="text"
+                value={newCategory}
+                onChange={(e) => setNewCategory(e.target.value)}
+                onBlur={() => setIsInputVisible(false)}
+              />
+              <IconSelection selectedIcon={selectedIcon} setSelectedIcon={setSelectedIcon}/>
+              <button type="button" onMouseDown={() => addExpenseCategory()} className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
 
-          </div>
+            </div>
 
-        </>
+          </>
+          )}
+        </div>
+
+        {categories?.map((each, index) =>
+          <SideBarIcon iconName="FaApple" text={each} />
         )}
       </div>
-
-
-      {categories?.map((each, index) =>
-        <SideBarIcon icon={<FaPlus size="28" />} text={each} />
-      )}
-
-    </div>
-
-
+    </>
 
   );
 };
 
-const SideBarIcon = ({ icon, text = 'Add New Category' }) => (
-  <div className="sidebar-icon group">
-    {text !== 'Add New Category' ? (
-      <Link href={{ pathname: `/category/${text}` }}>
-        {icon}
-      </Link>)
-      : (
-        icon
-      )
-    }
-    <span className="sidebar-tooltip group-hover:scale-100">
-      {text}
-    </span>
-  </div>
-);
+const SideBarIcon = ({ iconName = "FaPlus", text = 'Add New Category' }) => {
+  const Icon = lazy(() =>
+    import(`react-icons/fa`).then(module => ({ default: module[iconName] }))
+  );
+  return (
+    <div className="sidebar-icon group">
+      <Suspense fallback={<h1>Loading...</h1>}>
+
+        {text !== 'Add New Category' ? (
+          <Link href={{ pathname: `/category/${text}` }}>
+            {Icon && <Icon size="28" />}
+          </Link>)
+          : (
+            Icon && <Icon size="28" />
+          )
+        }
+        <span className="sidebar-tooltip group-hover:scale-100">
+          {text}
+        </span>
+      </Suspense>
+    </div>
+  )
+
+
+};
