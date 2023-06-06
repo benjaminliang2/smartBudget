@@ -24,7 +24,9 @@ export const SideBar = () => {
         console.log(error)
       }
     }
-    fillSidebar()
+    if (session) {
+      fillSidebar()
+    }
   }, [session?.user.id])
   useEffect(() => {
     if (isInputVisible) {

@@ -6,7 +6,7 @@ import ExpenseCard from "@/components/ExpenseCard";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
-import {faker} from '@faker-js/faker'
+import { faker } from '@faker-js/faker'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -89,7 +89,9 @@ const CategoryPage = ({ params }) => {
 
       }
     }
-    getAllExpensesForCategory()
+    if (session) {
+      getAllExpensesForCategory()
+    }
   }, [session?.user.id])
   const labels = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat']
   const data = {
