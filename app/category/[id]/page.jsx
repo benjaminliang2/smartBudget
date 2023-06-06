@@ -5,8 +5,30 @@
 import ExpenseCard from "@/components/ExpenseCard";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
+import {faker} from '@faker-js/faker'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const CategoryPage = ({ params }) => {
   const { data: session } = useSession();
@@ -69,10 +91,24 @@ const CategoryPage = ({ params }) => {
     }
     getAllExpensesForCategory()
   }, [session?.user.id])
+  const labels = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat']
+  const data = {
+    labels,
+    datasets: [
+      {
+        data: labels.map(() => faker.datatype.number({ min: 0, max: 200 })),
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ]
+  }
 
   return (
     <>
       <div className=''>
+
+
+        <Line data={data} />;
         <div className=" bg-slate-300 p-3 rounded-lg items-center">
           <h1>Add new expense</h1>
           <div className="grid gap-6 mb-6 md:grid-cols-2">
@@ -96,7 +132,6 @@ const CategoryPage = ({ params }) => {
           <button onClick={() => addExpense()}>Save</button>
         </div>
 
-        <TestNLP />
         {expenses?.map((each, index) =>
 
           <ExpenseCard key={each._id} cost={each.cost} name={each.name} merchant={each.merchant} />
@@ -108,8 +143,5 @@ const CategoryPage = ({ params }) => {
   );
 };
 
-const TestNLP = () => {
-
-}
 
 export default CategoryPage;
